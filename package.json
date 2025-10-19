@@ -1,0 +1,16 @@
+{
+  "name": "ci-cd-demo",
+  "version": "1.0.0",
+  "description": "Simple Node.js app for CI/CD demo",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "supertest": "^7.1.4"
+  }
+}
