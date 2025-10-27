@@ -1,83 +1,68 @@
 CI/CD Pipeline with GitHub Actions & Docker (No Cloud Needed)
-Objective
-Set up a full CI/CD pipeline that:
-- Builds a Docker image
-- Runs tests
-- Deploys locally (Minikube or local VM)
-Tools
-- GitHub Actions
-- Docker
-- Docker Hub (free)
-- Minikube or local VM
-Step 1: Prepare Application & Dockerfile
-Project Structure Example:
-ci-cd-demo/
-├── app/
-│ ├── index.js
-│ └── package.json
-├── Dockerfile
-└── docker-compose.yml
-Dockerfile Example:
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-EXPOSE 3000
-CMD ["node", "index.js"]
-docker-compose.yml Example:  
-version: '3'
-services:
- app:
- build: .
- ports:
- - "3000:3000"
-Step 2: Test Locally
-docker-compose build
-docker-compose up
-Visit http://localhost:3000 to verify the app runs.
-Step 3: Set Up GitHub Actions Workflow
-Create directory & file:
-.github/workflows/ci-cd.yml
-Sample workflow:
-name: CI/CD Pipeline
-on:
- push:
- branches: [main]
-jobs:
- build-test-deploy:
- runs-on: ubuntu-latest
- steps:
- - uses: actions/checkout@v3
- - name: Set up Node.js
- uses: actions/setup-node@v3. 
-with:
- node-version: '18'
- - name: Install dependencies
- run: npm install
- - name: Run tests
- run: npm test
- - name: Build Docker image
- run: docker build -t yourusername/ci-cd-demo:latest .
- - name: Log in to Docker Hub
- uses: docker/login-action@v2
- with:
- username: ${{ secrets.DOCKER_USERNAME }}
- password: ${{ secrets.DOCKER_PASSWORD }}
- - name: Push Docker image
- run: docker push yourusername/ci-cd-demo:latest
-Step 4: Add GitHub Secrets
-- DOCKER_USERNAME → Your Docker Hub username
-- DOCKER_PASSWORD → Docker Hub password
-Step 5: Deploy Locally (Minikube or VM)
-Pull image:
-docker pull yourusername/ci-cd-demo:latest
-Run container:
-docker run -d -p 3000:3000 yourusername/ci-cd-demo:latest
-Verify: Visit http://localhost:3000 
-Optionally, you can deploy with Minikube using a deployment.yaml file.
-Deliverables
-- GitHub repository with workflow .yml
-- Docker Hub image link
-- CI/CD workflow results screenshot
-- App deployed locally screenshot
+
+Author: Aniket Thavaru Rathod 
+Date: 27-Oct-2025
+ Organization: Self / Personal Project
+
+
+• Abstract 
+This project demonstrates a complete CI/CD pipeline using GitHub Actions and Docker. It automates building, testing, and deploying a containerized application locally without relying on cloud services
+
+• Introduction:-
+ Manual deployment of applications is time-consuming and error-prone. This project aims to implement an automated CI/CD pipeline that reduces manual effort and ensures consistent deployments
+Tools & Technology 
+• GitHub Actions – CI/CD automation
+ • Docker – Containerization
+ • Docker Hub – Image storage 
+• Minikube / Local VM – Local deployment 
+• Git & GitHub – Version control
+Architecture / Workflow
+ 1. Developer pushes code to GitHub.
+ 2. GitHub Actions workflow automatically runs tests, builds Docker image, and pushes it to Docker Hub. 
+3. The image is pulled and deployed locally using Docker or Minikube. 
+[Placeholder for Architecture Diagram / Workflow Screenshot]
+
+Implementation / Methodology 
+The project uses GitHub Actions workflows for automation. Dockerfile and docker-compose.yml define the container setup. The pipeline includes build, test, and deploy stages.
+ [Placeholder for Dockerfile snippet / GitHub Actions workflow snippet]
+
+Challenges / Troubleshooting 
+• Problem: YAML syntax error 
+Solution: Workflow failed due to invalid indentation or missing colon. Solution: Used YAML validator online and corrected spacing/indentation.
+ • Problem: Error: Input required and not supplied: aws-region 
+Solution: Workflow failed because AWS region was not set. Solution: Added aws-region: ap-south-1 in the workflow and configured secrets properly
+• Problem: Docker image build failed
+ Solution: Invalid Dockerfile or missing base image. Solution: Fixed Dockerfile syntax, used correct base image, and rebuilt locally first. 
+• Problem: Authentication failed while pushing image
+ Solution: Docker Hub login failed in GitHub Actions. Solution: Created DOCKERHUB_USERNAME and DOCKERHUB_TOKEN secrets and used docker/login-action@v2.
+
+ • Problem: Container not running locally 
+Solution: Port binding issue or image not found. Solution: Used docker ps, docker logs to debug, fixed port mapping in docker-compose.yml, then redeployed
+
+Results / Outcome 
+The final project resulted in a fully automated CI/CD pipeline. Application builds, tests, and deploys automatically whenever code is pushed to GitHub.
+ [Placeholder for deployed app screenshot]
+Conclusion & Learning 
+This project provided hands-on experience with CI/CD pipelines, GitHub Actions, Docker, and local deployment. It taught troubleshooting common issues and automation best practices.
+
+References / Resources
+ • GitHub Actions Documentation
+ • Docker Official Documentation 
+• Docker Hub Guides
+ • Minikube Official Docs
+
+ <img width="940" height="627" alt="image" src="https://github.com/user-attachments/assets/feeb8c80-eb74-4d46-9745-ba151bfb0d56" />
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
